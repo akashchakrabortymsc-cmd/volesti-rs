@@ -63,4 +63,17 @@ impl HPolytope {
             }
         }
     }
+/// Simple version: b vector er minimum value
+/// (proper implementation: Chebyshev center via LP — later)
+pub fn inner_ball_radius(&self) -> f64 {
+    // b er minimum — conservative estimate
+    // C++ e proper InnerBall() LP solve kore
+    // Amar kache ekhon simple version
+    self.b.iter()
+        .cloned()
+        .fold(f64::INFINITY, f64::min)
+        .max(0.1) // minimum 0.1 jate delta 0 na hoy
+}
+
+
 }
