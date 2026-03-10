@@ -140,7 +140,7 @@ let crises = detect_crisis(returns: &etf_data, window: 60);
 
 ## Author
 
-**Aakash Chakraborty**
+**Akash Chakraborty**
 MScFE | GSoC 2026 Applicant — GeomScale
 
 ---
