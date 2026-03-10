@@ -1,25 +1,25 @@
 use nalgebra::DVector;
 
-/// n-dimensional space e ekta point
+/// n-dimensional space
 #[derive(Debug, Clone)]
 pub struct Point {
     pub coords: DVector<f64>,
 }
 
 impl Point {
-    /// Vec<f64> theke Point banao
+    /// Vec<f64>
     pub fn new(coords: Vec<f64>) -> Self {
         Point {
             coords: DVector::from_vec(coords),
         }
     }
 
-    /// Dimension koto?
+    /// Dimension
     pub fn dim(&self) -> usize {
         self.coords.len()
     }
 
-    /// Origin theke distance: sqrt(x1² + x2² + ...)
+    /// Origin theke distance
     pub fn norm(&self) -> f64 {
         self.coords.norm()
     }
@@ -34,7 +34,9 @@ impl Point {
 impl std::ops::Add for Point {
     type Output = Point;
     fn add(self, other: Point) -> Point {
-        Point { coords: self.coords + other.coords }
+        Point {
+            coords: self.coords + other.coords,
+        }
     }
 }
 
@@ -42,7 +44,9 @@ impl std::ops::Add for Point {
 impl std::ops::Add<&Point> for Point {
     type Output = Point;
     fn add(self, other: &Point) -> Point {
-        Point { coords: self.coords + &other.coords }
+        Point {
+            coords: self.coords + &other.coords,
+        }
     }
 }
 
@@ -50,7 +54,9 @@ impl std::ops::Add<&Point> for Point {
 impl std::ops::Mul<f64> for Point {
     type Output = Point;
     fn mul(self, scalar: f64) -> Point {
-        Point { coords: self.coords * scalar }
+        Point {
+            coords: self.coords * scalar,
+        }
     }
 }
 
@@ -58,6 +64,8 @@ impl std::ops::Mul<f64> for Point {
 impl std::ops::Sub for Point {
     type Output = Point;
     fn sub(self, other: Point) -> Point {
-        Point { coords: self.coords - other.coords }
+        Point {
+            coords: self.coords - other.coords,
+        }
     }
 }

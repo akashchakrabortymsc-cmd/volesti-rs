@@ -1,8 +1,9 @@
+use rand::rngs::StdRng;
+use rand::SeedableRng;
 use volesti_rs::geometry::hpolytope::HPolytope;
 use volesti_rs::geometry::point::Point;
 use volesti_rs::samplers::ball_walk::{ball_walk, BallWalkConfig};
-use rand::SeedableRng;
-use rand::rngs::StdRng;
+use volesti_rs::samplers::portfolio::sample_portfolios;
 
 #[test]
 fn test_hypercube_contains_origin() {
@@ -31,16 +32,17 @@ fn test_ball_walk_samples_inside_hypercube() {
     let poly = HPolytope::unit_hypercube(10);
     let start = Point::new(vec![0.0; 10]);
     let config = BallWalkConfig::default();
-    let mut rng = StdRng::seed_from_u64(42); // fixed seed = reproducible
+    let mut rng = StdRng::seed_from_u64(42);
 
     let samples = ball_walk(&poly, &start, 100, &config, &mut rng).unwrap();
 
     assert_eq!(samples.len(), 100);
-
-    // Protita sample polytope er bhitore ache?
     for s in &samples {
-        assert!(poly.contains(s).unwrap(),
-            "Sample outside polytope: {:?}", s.coords);
+        assert!(
+            poly.contains(s).unwrap(),
+            "Sample outside polytope: {:?}",
+            s.coords
+        );
     }
 }
 
@@ -56,4 +58,63 @@ fn test_ball_walk_samples_inside_simplex() {
     for s in &samples {
         assert!(poly.contains(s).unwrap());
     }
+}
+
+#[test]
+fn test_portfolio_on_simplex() {
+    let mut rng = StdRng::seed_from_u64(42);
+    let result = sample_portfolios(10, 100, &mut rng).unwrap();
+
+    for portfolio in &result.weights {
+        for &w in portfolio {
+            assert!(w >= -1e-6, "Negative weight: {}", w);
+        }
+        let sum: f64 = portfolio.iter().copied().sum::<f64>();
+        assert!(sum <= 1.0 + 1e-6, "Sum > 1: {}", sum);
+    }
+}
+
+#[test]
+fn test_cross_sectional_score() {
+    let mut rng = StdRng::seed_from_u64(99);
+    let result = sample_portfolios(5, 200, &mut rng).unwrap();
+    let returns = vec![0.01, 0.02, -0.01, 0.03, 0.005];
+    let scores = result.cross_sectional_score(&returns);
+
+    for s in &scores {
+        assert!(*s >= 0.0 && *s <= 1.0, "Score out of range: {}", s);
+    }
+}
+
+use volesti_rs::samplers::copula::{compute_copula, detect_crisis};
+
+#[test]
+fn test_copula_grid_sums_to_one() {
+    let mut rng = StdRng::seed_from_u64(42);
+    let samples = sample_portfolios(5, 1000, &mut rng).unwrap();
+
+    let returns_1 = vec![0.01, 0.02, -0.01, 0.03, 0.005];
+    let returns_2 = vec![0.02, 0.01, 0.03, -0.01, 0.015];
+
+    let copula = compute_copula(&samples, &returns_1, &returns_2, 10);
+
+    // Grid sum ≈ 1
+    let total: f64 = copula.grid.iter().flat_map(|row| row.iter()).sum();
+    assert!((total - 1.0).abs() < 0.01, "Grid sum = {}", total);
+}
+
+#[test]
+fn test_crisis_indicator_returns_value() {
+    let mut rng = StdRng::seed_from_u64(42);
+    let samples = sample_portfolios(5, 1000, &mut rng).unwrap();
+
+    let returns_1 = vec![0.01, 0.02, -0.01, 0.03, 0.005];
+    let returns_2 = vec![0.02, 0.01, 0.03, -0.01, 0.015];
+
+    let copula = compute_copula(&samples, &returns_1, &returns_2, 10);
+    let indicator = copula.crisis_indicator(1);
+
+    // Indicator >= 0
+    assert!(indicator >= 0.0, "Negative indicator: {}", indicator);
+    println!("Crisis indicator: {:.4}", indicator);
 }

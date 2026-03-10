@@ -1,7 +1,7 @@
-use rand::Rng;
+use crate::error::VolestiError;
 use crate::geometry::hpolytope::HPolytope;
 use crate::geometry::point::Point;
-use crate::error::VolestiError;
+use rand::Rng;
 
 /// Ball Walk configuration
 pub struct BallWalkConfig {
@@ -21,9 +21,9 @@ pub struct BallWalkConfig {
 impl Default for BallWalkConfig {
     fn default() -> Self {
         BallWalkConfig {
-            delta: None,      // auto-compute
-            burn_in: 100,     // 100 steps discard
-            thinning: 1,      // protita step e sample
+            delta: None,  // auto-compute
+            burn_in: 100, // 100 steps discard
+            thinning: 1,  // protita step e sample
         }
     }
 }
@@ -62,9 +62,7 @@ fn sample_from_ball<R: Rng>(dim: usize, delta: f64, rng: &mut R) -> Point {
     let r = delta * u.powf(1.0 / dim as f64);
 
     // Step 4: Scale koro
-    let coords: Vec<f64> = gaussian.iter()
-        .map(|x| x / norm * r)
-        .collect();
+    let coords: Vec<f64> = gaussian.iter().map(|x| x / norm * r).collect();
 
     Point::new(coords)
 }
@@ -88,7 +86,6 @@ pub fn ball_walk<R: Rng>(
     config: &BallWalkConfig,
     rng: &mut R,
 ) -> Result<Vec<Point>, VolestiError> {
-
     // Validation
     if n_samples == 0 {
         return Err(VolestiError::ZeroSamples);
@@ -110,10 +107,12 @@ pub fn ball_walk<R: Rng>(
         let displacement = sample_from_ball(dim, delta, rng);
         // current + displacement
         let candidate = Point::new(
-            current.coords.iter()
+            current
+                .coords
+                .iter()
                 .zip(displacement.coords.iter())
                 .map(|(a, b)| a + b)
-                .collect()
+                .collect(),
         );
         if polytope.contains(&candidate)? {
             current = candidate; // accept
@@ -129,10 +128,12 @@ pub fn ball_walk<R: Rng>(
 
         // Candidate point: current + displacement
         let candidate = Point::new(
-            current.coords.iter()
+            current
+                .coords
+                .iter()
                 .zip(displacement.coords.iter())
                 .map(|(a, b)| a + b)
-                .collect()
+                .collect(),
         );
 
         // Membership check — C++ er is_in() er equivalent

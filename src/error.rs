@@ -2,11 +2,11 @@ use thiserror::Error;
 
 #[derive(Debug, Error)]
 pub enum VolestiError {
-    // Polytope er modhye kono valid point nei
+    // Polytope have no point inside
     #[error("Polytope has no interior point")]
     InfeasiblePolytope,
 
-    // Point er dimension ar Polytope er dimension match korche na
+    // Point er dimension ar Polytope er dimension not machinea
     #[error("Dimension mismatch: expected {expected}, got {got}")]
     DimensionMismatch { expected: usize, got: usize },
 

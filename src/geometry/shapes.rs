@@ -1,5 +1,5 @@
-use nalgebra::{DMatrix, DVector};
 use crate::geometry::hpolytope::HPolytope;
+use nalgebra::{DMatrix, DVector};
 
 impl HPolytope {
     /// Unit hypercube [-1,1]^n
@@ -9,8 +9,8 @@ impl HPolytope {
         let b = DVector::from_element(2 * n, 1.0_f64);
 
         for i in 0..n {
-            a[(i, i)] = 1.0;       //  x[i] <= 1
-            a[(n + i, i)] = -1.0;  // -x[i] <= 1
+            a[(i, i)] = 1.0; //  x[i] <= 1
+            a[(n + i, i)] = -1.0; // -x[i] <= 1
         }
 
         HPolytope::new(a, b)
