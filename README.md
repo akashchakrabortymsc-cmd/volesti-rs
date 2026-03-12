@@ -1,4 +1,4 @@
-# volesti-rs 🦀
+# Volesti-rs 🦀
 
 A high-performance **Rust port** of [volesti](https://github.com/GeomScale/volesti) — a C++ library for volume approximation and MCMC sampling of convex polytopes — with a focus on **quantitative finance applications**.
 
