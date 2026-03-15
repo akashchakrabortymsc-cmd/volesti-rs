@@ -34,25 +34,24 @@ impl HPolytope {
 
     /// Point IN polytope ? A*x <= b?
     pub fn contains(&self, point: &Point) -> Result<bool, VolestiError> {
-        if point.dim() != self.dim() {
-            return Err(VolestiError::DimensionMismatch {
-                expected: self.dim(),
-                got: point.dim(),
-            });
-        }
-
-        // A*x compute
-        let ax = &self.a * &point.coords;
-
-        // Protita constraint check
-        for i in 0..ax.len() {
-            if ax[i] > self.b[i] + 1e-10 {
-                return Ok(false);
-            }
-        }
-
-        Ok(true) // andar
+    if point.dim() != self.dim() {
+        return Err(VolestiError::DimensionMismatch {
+            expected: self.dim(),
+            got: point.dim(),
+        });
     }
+
+    // Compute full A*x once using nalgebra's optimized BLAS
+    // Then check row by row with early exit
+    let ax = &self.a * &point.coords;
+    
+    for i in 0..ax.len() {
+        if ax[i] > self.b[i] + 1e-10 {
+            return Ok(false);  // early exit
+        }
+    }
+    Ok(true)
+}
 
     /// Protita row normalize koro: A[i] / ||A[i]||, b[i] / ||A[i]||
     pub fn normalize(&mut self) {
