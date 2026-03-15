@@ -86,7 +86,7 @@ fn test_cross_sectional_score() {
     }
 }
 
-use volesti_rs::samplers::copula::{compute_copula, detect_crisis};
+use volesti_rs::samplers::copula::compute_copula;
 
 #[test]
 fn test_copula_grid_sums_to_one() {
