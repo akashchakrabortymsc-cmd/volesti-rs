@@ -1,3 +1,4 @@
 pub mod error;
-pub mod geometry;
+pub mod polytope;
 pub mod samplers;
+pub mod finance;
