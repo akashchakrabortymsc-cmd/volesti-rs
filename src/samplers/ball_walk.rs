@@ -1,6 +1,6 @@
 use crate::error::VolestiError;
-use crate::geometry::hpolytope::HPolytope;
-use crate::geometry::point::Point;
+use crate::polytope::hpolytope::HPolytope;
+use crate::polytope::point::Point;
 use rand::Rng;
 
 /// Ball Walk configuration

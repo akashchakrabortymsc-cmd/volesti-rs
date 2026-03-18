@@ -31,8 +31,8 @@
 use rand::rngs::StdRng;
 use rand::SeedableRng;
 use nalgebra::{DMatrix, DVector};
-use volesti_rs::geometry::hpolytope::HPolytope;
-use volesti_rs::geometry::point::Point;
+use volesti_rs::polytope::hpolytope::HPolytope;
+use volesti_rs::polytope::point::Point;
 use volesti_rs::samplers::ball_walk::{ball_walk, BallWalkConfig};
 
 // ────────────────────────────────────────────────────────────
@@ -281,7 +281,7 @@ fn test_ks_equivalence_10d_cube_vs_cpp_baseline() {
 }
 
 // ────────────────────────────────────────────────────────────
-// TEST 4 — KS test: 3D simplex (portfolio geometry)
+// TEST 4 — KS test: 3D simplex (portfolio polytope)
 //
 // WHAT: Verifies uniform sampling on the standard simplex Δ^3.
 // WHY: The simplex is the portfolio weight space. Correct sampling

@@ -1,8 +1,8 @@
 use rand::rngs::StdRng;
 use rand::SeedableRng;
 use nalgebra::{DMatrix, DVector};
-use volesti_rs::geometry::hpolytope::HPolytope;
-use volesti_rs::geometry::point::Point;
+use volesti_rs::polytope::hpolytope::HPolytope;
+use volesti_rs::polytope::point::Point;
 use volesti_rs::samplers::ball_walk::{ball_walk, BallWalkConfig};
 
 // ── HELPER: 10D unit cube — same as C++ generate_cube(10) ────

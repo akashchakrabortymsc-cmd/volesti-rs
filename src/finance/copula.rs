@@ -1,9 +1,9 @@
-use crate::samplers::portfolio::{sample_portfolios, PortfolioSamples};
+use crate::finance::portfolio::{sample_portfolios, PortfolioSamples};
 use rand::Rng;
 
 /// Copula grid — n×n matrix of probabilities
 pub struct Copula {
-    /// grid[i][j] = probability mass at cell (i,j)cargo 
+    /// grid[i][j] = probability mass at cell (i,j)cargo
     pub grid: Vec<Vec<f64>>,
     pub num_slices: usize,
 }
@@ -56,13 +56,13 @@ pub fn compute_copula(
     let num = samples.n_samples;
 
     // C++: sum1 += p[j] * pl1[j]
-    let  scores_1: Vec<f64> = samples
+    let scores_1: Vec<f64> = samples
         .weights
         .iter()
         .map(|w| w.iter().zip(returns_1.iter()).map(|(wi, ri)| wi * ri).sum())
         .collect();
 
-    let  scores_2: Vec<f64> = samples
+    let scores_2: Vec<f64> = samples
         .weights
         .iter()
         .map(|w| w.iter().zip(returns_2.iter()).map(|(wi, ri)| wi * ri).sum())
@@ -91,13 +91,13 @@ pub fn compute_copula(
         let s1 = scores_1[idx];
         let s2 = scores_2[idx];
 
-        // Col find 
+        // Col find
         let col = boundaries_1
             .iter()
             .position(|&b| s1 < b)
             .unwrap_or(num_slices - 1);
 
-        // Row find 
+        // Row find
         let row = boundaries_2
             .iter()
             .position(|&b| s2 < b)

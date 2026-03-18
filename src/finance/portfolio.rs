@@ -1,10 +1,11 @@
 use crate::error::VolestiError;
-use crate::geometry::hpolytope::HPolytope;
-use crate::geometry::point::Point;
+use crate::polytope::hpolytope::HPolytope;
+use crate::polytope::point::Point;
 use crate::samplers::ball_walk::{ball_walk, BallWalkConfig};
 use rand::Rng;
 
 pub struct PortfolioSamples {
+    
     pub weights: Vec<Vec<f64>>,
     pub n_assets: usize,
     pub n_samples: usize,

@@ -1,4 +1,4 @@
-use crate::geometry::hpolytope::HPolytope;
+use crate::polytope::hpolytope::HPolytope;
 use nalgebra::{DMatrix, DVector};
 
 impl HPolytope {

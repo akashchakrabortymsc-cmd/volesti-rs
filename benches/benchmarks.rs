@@ -1,10 +1,10 @@
 use criterion::{black_box, criterion_group, criterion_main, BenchmarkId, Criterion};
 use rand::rngs::StdRng;
 use rand::SeedableRng;
-use volesti_rs::geometry::hpolytope::HPolytope;
-use volesti_rs::geometry::point::Point;
+use volesti_rs::polytope::hpolytope::HPolytope;
+use volesti_rs::polytope::point::Point;
 use volesti_rs::samplers::ball_walk::{ball_walk, BallWalkConfig};
-use volesti_rs::samplers::portfolio::sample_portfolios;
+use volesti_rs::finance::portfolio::sample_portfolios;
 
 // ── Ball Walk on Hypercube across dimensions ──────────────────
 // Matches volesti's own benchmark: bench_ball_walk_hypercube

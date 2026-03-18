@@ -1,5 +1,5 @@
 use crate::error::VolestiError;
-use crate::geometry::point::Point;
+use crate::polytope::point::Point;
 use nalgebra::{DMatrix, DVector};
 
 /// H-Polytope: A*x <= b
