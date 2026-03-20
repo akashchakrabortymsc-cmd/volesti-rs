@@ -140,13 +140,12 @@ pub fn ball_walk<R: Rng>(
         if polytope.contains(&candidate)? {
             current = candidate; // accept
         }
-        // reject hole current e thako
+
 
         step += 1;
 
-        // Thinning — protita `thinning` step e 1ta sample nao
-        if step % config.thinning == 0 {
-            samples.push(current.clone());
+        if step.is_multiple_of(config.thinning) {
+                samples.push(current.clone());
         }
     }
 
