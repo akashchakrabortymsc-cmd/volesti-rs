@@ -195,7 +195,7 @@ Every Rust module maps to a specific C++ header.
 ```
 volesti-rs/
 ├── Cargo.toml
-├── rust-toolchain.toml          ← pinned stable toolchain
+├── rust-toolchain.toml
 │
 ├── src/
 │   ├── lib.rs                   ← public API surface
@@ -206,11 +206,17 @@ volesti-rs/
 │   │   └── shapes.rs            ← known_polytope_generators.h  ✅
 │   │
 │   ├── samplers/                ← replaces: include/random_walks/
+│   │   ├── walk_type.rs         ← WalkType enum (new, Week 4)  🔲
 │   │   ├── ball_walk.rs         ← uniform_ball_walk.hpp        ✅
-│   │   ├── hit_and_run.rs       ← uniform_cdhr_walk.hpp        🔲 Week 1
-│   │   ├── billiard_walk.rs     ← uniform_billiard_walk.hpp    🔲 Week 2
-│   │   ├── portfolio.rs         ← original finance API         ✅
-│   │   └── copula.rs            ← copulas.h                    ✅
+│   │   ├── hit_and_run.rs       ← uniform_rdhr_walk.hpp +
+│   │   │                          uniform_cdht_walk.hpp        🔲 Week 1
+│   │   ├── boundary_rdhr.rs     ← boundary_rdhr_walk.hpp       🔲 Week 3
+│   │   ├── boundary_cdhr.rs     ← boundary_cdhr_walk.hpp       🔲 Week 3
+│   │   └── billiard_walk.rs     ← uniform_billiard_walk.hpp    🔲 Week 2–3
+│   │
+│   ├── finance/                 ← replaces: include/volume/ + include/sampling/
+│   │   ├── portfolio.rs         ← Sam_Canon_Unit in copulas.h  ✅
+│   │   └── copula.rs            ← twoParHypFam in copulas.h    ✅
 │   │
 │   ├── diagnostics/             ← replaces: include/diagnostics/
 │   │   ├── psrf.rs              ← univariate_psrf.hpp          🔲 Week 5
@@ -220,18 +226,16 @@ volesti-rs/
 │       └── feasible_point.rs    ← feasible_point.hpp           🔲 Week 6
 │
 ├── tests/
-│   ├── unit_tests.rs            ← 9 tests   ✅
-│   ├── statistical_test.rs      ← 4 tests   ✅
-│   └── equivalence_test.rs      ← 5 tests   ✅
+│   ├── unit_tests.rs            ← 9 tests                      ✅
+│   ├── statistical_test.rs      ← 4 tests                      ✅
+│   └── equivalence_test.rs      ← 5 tests                      ✅
 │
 ├── benches/
-│   └── benchmarks.rs            ← Criterion ✅
+│   └── benchmarks.rs            ← Criterion 6 walks × 4 dims   ✅
 │
 └── .github/
     └── workflows/
-        └── ci.yml               ← fmt + clippy + test on every push
-```
-
+        └── ci.yml               ← fmt + clippy + test on push
 ---
 
 ## GSoC 2026 Roadmap
