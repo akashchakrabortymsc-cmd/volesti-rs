@@ -238,6 +238,8 @@ volesti-rs/
         └── ci.yml               ← fmt + clippy + test on push
 ---
 
+```
+
 ## GSoC 2026 Roadmap
 
 | Deliverable | Weeks | What gets built |
