@@ -201,7 +201,7 @@ volesti-rs/
 │   ├── lib.rs                   ← public API surface
 │   ├── error.rs                 ← VolestiError enum
 │   │
-│   ├── geometry/                ← replaces: include/convex_bodies/
+│   ├── polytope/                ← replaces: include/convex_bodies/
 │   │   ├── hpolytope.rs         ← hpolytope.h                  ✅
 │   │   └── shapes.rs            ← known_polytope_generators.h  ✅
 │   │
