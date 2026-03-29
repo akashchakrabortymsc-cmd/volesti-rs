@@ -2,7 +2,7 @@
 
 This document describes every test in the volesti-rs test suite:
 what each test verifies, why it exists, and how it connects to the
-C++ volesti reference implementation.
+C++ volesti reference Implementation.
 
 ---
 
