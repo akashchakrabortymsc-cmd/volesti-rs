@@ -2,6 +2,14 @@
 name = "volesti-rs"
 version = "0.1.0"
 edition = "2021"
+authors = ["Akash Chakraborty <akashchakrabortymsc@gmail.com>"]
+description = "Native Rust port of the volesti C++ geometric MCMC library — uniform sampling from convex polytopes with applications in quantitative finance"
+license = "MIT"
+repository = "https://github.com/akashchakrabortymsc-cmd/Volesti_Rust"
+readme = "README.md"
+keywords = ["mcmc", "sampling", "convex-polytope", "geometry", "finance"]
+categories = ["science", "algorithms"]
+exclude = ["target/"]
 
 [dependencies]
 nalgebra = "0.33.0"
@@ -14,3 +22,5 @@ criterion = { version = "0.5", features = ["html_reports"] }
 [[bench]]
 name = "benchmarks"
 harness = false
+
+description = "Rust port of the GeomScale volesti C++ library (github.com/GeomScale/volesti) — geometric MCMC sampling from convex polytopes for quantitative finance"
